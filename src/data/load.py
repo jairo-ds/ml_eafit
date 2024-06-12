@@ -4,6 +4,7 @@ import argparse
 import wandb
 import os
 
+# Definir argumentos del script
 parser = argparse.ArgumentParser()
 parser.add_argument('--IdExecution', type=str, help='ID of the execution')
 args = parser.parse_args()
@@ -11,7 +12,8 @@ args = parser.parse_args()
 if args.IdExecution:
     print(f"IdExecution: {args.IdExecution}")
 
-def load_datasetvolador(data_path, train_size=.8):
+# Función para cargar el dataset
+def load_datasetvolador(data_path, train_size=0.8):
     """
     Load the datasetvolador data from local files.
     """
@@ -31,9 +33,10 @@ def load_datasetvolador(data_path, train_size=.8):
     datasets = [training_set, validation_set, test_set]
     return datasets
 
+# Función para cargar y registrar datos en wandb
 def load_and_log(data_path):
     with wandb.init(
-        project="MLOps-ds2024",
+        project="Integradorpj-2024",
         name=f"Load Raw Data ExecId-{args.IdExecution}", job_type="load-data") as run:
         
         datasets = load_datasetvolador(data_path)  # Usar la nueva función para cargar datasetvolador
@@ -53,8 +56,9 @@ def load_and_log(data_path):
         run.log_artifact(raw_data)
 
 # Ruta a los datos en tu PC
-data_path = './data/datasetvolador'
+data_path = 'C:/Users/Axel/Documents/EAFIT/SEMESTRE 2 2024-1/Proyecto Integrador/datasetvolador'
 
-# testing
+# Ejecutar la función de carga y registro
 load_and_log(data_path)
+
 
